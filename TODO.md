@@ -1,0 +1,7 @@
+- test all public methods, fix everything
+- make some documentation
+- launchPuppet maybe should be async 
+- launchPuppet should have optional callback
+- multiple internal performance tests
+- write some tests
+- npm pkg
