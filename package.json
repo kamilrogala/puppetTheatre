@@ -1,10 +1,10 @@
 {
-  "name": "launch-puppeteer-tests",
-  "version": "0.0.1",
+  "name": "puppet-theatre",
+  "version": "0.0.2",
   "description": "",
-  "main": "app.js",
+  "main": "dist/main.js",
   "scripts": {
-    "test": "node app.js"
+    "app-test": "node ./example/app.js"
   },
   "keywords": [],
   "author": "Kamil Rogala <contact@kamilrogala.it> (https://kamilrogala.it)",

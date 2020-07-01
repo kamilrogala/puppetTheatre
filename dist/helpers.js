@@ -1,6 +1,7 @@
 const {
     writeFileSync,
 } = require('fs');
+const path = require('path');
 const fg = require('fast-glob');
 const {
     execSync,
@@ -23,12 +24,12 @@ const defaultParams = {
         pattern: ['./*.puppet.js'],
         results: './results.json',
     },
-    attempts: 1,
+    attempts: 3,
     additionalParams: {
-        checkPerformance: false,
+        checkPerformance: true,
         silent: false,
         fastGlobParams: {
-            dot: true,
+            extglob: true,
         },
     },
 };
@@ -40,8 +41,11 @@ const defaultParams = {
  * @param {string} params Params for fast-glob npm package
  * @returns {string[]} Array with names of puppet files
  */
-const getPuppets = (pattern = defaultParams.path.pattern, params) => {
-    const puppets = fg.sync(pattern, params);
+const getPuppets = (pattern = defaultParams.path.pattern, params, executeDir = null) => {
+    let patternToSearch = pattern;
+    if (executeDir) patternToSearch = patternToSearch.map((el) => `${executeDir}/${el}`.replace(/\\/g, '/'));
+
+    const puppets = fg.sync(patternToSearch, params);
     if (!puppets.length) {
         console.warn('\n\n\n======[ NO PUPPETEER FILES! ]======'.yellow);
         console.info('Check path or pattern.'.blue);
@@ -59,7 +63,8 @@ const getPuppets = (pattern = defaultParams.path.pattern, params) => {
  * @param {object} data performance tests data
  * @param {string} path path to result file
  */
-const writeResultsToFile = (data, path) => writeFileSync(path, JSON.stringify(data, null, 4));
+// eslint-disable-next-line max-len
+const writeResultsToFile = (data, filePath) => writeFileSync(filePath, JSON.stringify(data, null, 4));
 
 /**
  * @name performanceInformations
@@ -162,7 +167,7 @@ const gatherPuppetResults = (puppetExec, resultsObj, index, puppetPath) => {
     }
 
     if (!resultsFile[puppet]) resultsFile[puppet] = {};
-    resultsFile[puppet][index] = result;
+    resultsFile[puppet][index] = `${result}ms`;
 
     return assignResults(resultsFile, resultsObj);
 };
@@ -171,23 +176,27 @@ const gatherPuppetResults = (puppetExec, resultsObj, index, puppetPath) => {
  * @name launchPuppet
  * @description launch single puppet file
  * @param {string} puppet name of puppeteer file (with .js extension)
- * @param {number} [index=0] attempt number
+ * @param {object} [params=defaultParams] parameters for function
  * @param {object} [testsResults={}] object to assign results
  *      if params.additionalParams.checkPerformance is true
- * @param {object} [params=defaultParams] parameters for function
+ * @param {number} [index=0] attempt number
  */
 const launchPuppet = (
     puppet,
-    index = 0,
-    testsResults = {},
     params = defaultParams,
+    testsResults = {},
+    index = 0,
 ) => {
     const concatenatedParams = mergeObjects(defaultParams, params);
     let results = {};
 
     if (!concatenatedParams.additionalParams.silent) console.info(`attempt #${index + 1}`);
 
-    const puppetExec = execSync(`node ./${puppet}`);
+    const executeDirPath = path.normalize(path.dirname(require.main.filename));
+
+    const puppetExec = execSync(`node ${puppet}`, {
+        cwd: executeDirPath,
+    });
 
     if (concatenatedParams.additionalParams.checkPerformance) {
         results = gatherPuppetResults(puppetExec.toString(), testsResults, index, puppet);
@@ -200,17 +209,17 @@ const launchPuppet = (
  * @name launchPuppetsGroup
  * @description launch puppet file many times, number depends on params.attempts
  * @param {string} puppet name of puppeteer file (with .js extension)
+ * @param {object} [params=defaultParams] parameters for function
  * @param {object} [resultsObj={}] object to assign results
  *      if params.additionalParams.checkPerformance is true
  * @param {object} [performanceObj={}] object to assign results of general performance
- * @param {object} [params=defaultParams] parameters for function
  * @returns {object} general perfomance results
  */
 const launchPuppetsGroup = (
     puppet,
+    params = defaultParams,
     resultsObj = {},
     performanceObj = {},
-    params = defaultParams,
 ) => {
     const concatenatedParams = mergeObjects(defaultParams, params);
     const generalPerformanceResults = {};
@@ -220,7 +229,7 @@ const launchPuppetsGroup = (
     const timeStart = new Date().getTime();
 
     for (let i = 0; i < params.attempts; i += 1) {
-        launchPuppet(puppet, i, resultsObj, concatenatedParams);
+        launchPuppet(puppet, concatenatedParams, resultsObj, i);
     }
 
     const timeEnd = new Date().getTime();

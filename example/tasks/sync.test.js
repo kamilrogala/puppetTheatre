@@ -1,4 +1,6 @@
 const puppeteer = require('puppeteer');
+const path = require('path');
+
 const config = {
     headless: false,
     defaultViewport: {
@@ -8,7 +10,7 @@ const config = {
     }
 };
 
-const links = Array(5).fill('https://google.com');
+const links = Array(3).fill('https://google.com');
 
 (async () => {
     console.time('puppetPerformance');
@@ -20,7 +22,7 @@ const links = Array(5).fill('https://google.com');
         await page.goto(url);
 
         await page.screenshot({
-            path: `./imgs/test_${index}.jpg`
+            path: path.resolve(`${__dirname}/imgs/test_${index}.jpg`),
         });
     };
 

@@ -1,5 +1,7 @@
 const {
-    launch
+    launch,
+    // launchPuppet,
+    // launchPuppetsGroup,
 } = require('../dist/main');
 
 const params = {
@@ -9,3 +11,11 @@ const params = {
 };
 
 launch(params);
+
+// single file launch
+// launchPuppet('./tasks/normal.test.js');
+
+// single file launch- multiple times
+// launchPuppetsGroup('./tasks/normal.puppet.js', {
+//     attempts: 3,
+// });

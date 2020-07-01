@@ -1,5 +1,5 @@
 /* eslint-disable guard-for-in */
-
+const path = require('path');
 const {
     getPuppets,
     writeResultsToFile,
@@ -28,19 +28,20 @@ const logObject = {
  */
 const launch = (params = defaultParams) => {
     const concatenatedParams = mergeObjects(defaultParams, params);
-    const actualPath = process.env.INIT_CWD;
+    const executeDirPath = path.normalize(path.dirname(require.main.filename));
     const puppets = getPuppets(
         concatenatedParams.path.pattern,
         concatenatedParams.additionalParams.fastGlobParams,
+        executeDirPath,
     );
 
     console.info('\n======[ THE PUPPET THEATER STARTS! ]======\n\n\n');
     if (puppets.length) {
         puppets.forEach((puppet) => launchPuppetsGroup(
             puppet,
+            concatenatedParams,
             logObject.testsResults,
             logObject.performanceResults,
-            concatenatedParams,
         ));
 
         console.info('\n\n\n======[ THE PUPPET THEATER IS ENDING! ]======\n');
@@ -49,7 +50,7 @@ const launch = (params = defaultParams) => {
             performanceInformations(concatenatedParams, logObject);
         }
 
-        writeResultsToFile(logObject.resultsFile, `${actualPath}/${concatenatedParams.path.results}`);
+        writeResultsToFile(logObject.performanceResults, `${executeDirPath}/${concatenatedParams.path.results}`);
     }
 };
 

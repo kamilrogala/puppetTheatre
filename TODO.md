@@ -1,7 +1,9 @@
-- test all public methods, fix everything
 - make some documentation
-- launchPuppet maybe should be async 
-- launchPuppet should have optional callback
+- launchPuppet maybe should be async (?)
+- launchPuppet should have optional callbacks (fail/success)
+- callback added to launch and launchPuppetsGroup (as param maybe?)
+- write results to file should be optional (as param)
+- results should be... prettier
 - multiple internal performance tests
-- write some tests
+- write some unit tests
 - npm pkg
