@@ -57,17 +57,17 @@ to be done
 {
   path: {
     pattern: ['./*.puppet.js'],
-    results:  './results.json',
+    results:  './results.json'
   },
   attempts:  3,
   additionalParams: {
     checkPerformance:  true,
     silent:  false,
     fastGlobParams: {
-      extglob:  true,
-    },
-  },
-};
+      extglob:  true
+    }
+  }
+}
 ```
 ##### Overriding defaults
 You can override any of default param:
@@ -89,7 +89,7 @@ output:
 {
   path: {
     pattern: ['./tasks/**/*.test.js'],
-    results:  './results.json',
+    results:  './results.json'
   },
   attempts:  5,
   additionalParams: {
@@ -98,9 +98,9 @@ output:
     fastGlobParams: {
       extglob:  true,
       braceExpansion:  false
-    },
-  },
-};
+    }
+  }
+}
 */
 ```
 ##### Parameters usage in functions
