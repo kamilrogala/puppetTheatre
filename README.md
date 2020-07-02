@@ -55,51 +55,51 @@ to be done
 ##### Defaults
 ```js
 {
-	path: {
-		pattern: ['./*.puppet.js'],
-		results:  './results.json',
-	},
-	attempts:  3,
-	additionalParams: {
-		checkPerformance:  true,
-		silent:  false,
-		fastGlobParams: {
-			extglob:  true,
-		},
-	},
+  path: {
+    pattern: ['./*.puppet.js'],
+    results:  './results.json',
+  },
+  attempts:  3,
+  additionalParams: {
+    checkPerformance:  true,
+    silent:  false,
+    fastGlobParams: {
+      extglob:  true,
+    },
+  },
 };
 ```
 ##### Overriding defaults
 You can override any of default param:
 ```js
 const  params = {
-	path: {
-		pattern: ['./tasks/**/*.test.js'],
-	},
-	attempts:  5,
-	additionalParams: {
-		checkPerformance:  false,
-		fastGlobParams: {
-			braceExpansion:  false
-		}
-	}
+  path: {
+    pattern: ['./tasks/**/*.test.js'],
+  },
+  attempts:  5,
+  additionalParams: {
+    checkPerformance:  false,
+    fastGlobParams: {
+      braceExpansion:  false
+    }
+  }
 };
 /* 
 output:
 {
-	path: {
-		pattern: ['./tasks/**/*.test.js'],
-		results:  './results.json',
-	},
-	attempts:  5,
-	additionalParams: {
-		checkPerformance:  false,
-		silent:  false,
-		fastGlobParams: {
-			extglob:  true,
-			braceExpansion:  false
-		},
-	},
+  path: {
+    pattern: ['./tasks/**/*.test.js'],
+    results:  './results.json',
+  },
+  attempts:  5,
+  additionalParams: {
+    checkPerformance:  false,
+    silent:  false,
+    fastGlobParams: {
+      extglob:  true,
+      braceExpansion:  false
+    },
+  },
 };
 */
 ```
