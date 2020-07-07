@@ -44,13 +44,33 @@ This function launches single puppet. As argument you must type just path to you
 ```js
 launchPuppet('./tasks/puppeteerTask.js');
 ```
-If you params object contains additionalParams.checkPerformance set as true this function returns object with performance data.  To do this just use this example:
+If you params object contains additionalParams.checkPerformance set as true this function returns object with performance data. To do this just use this example:
 ```js
-launchPuppet('./tasks/puppeteerTask.js', myParams, {}, 0);
+launchPuppet('./tasks/puppeteerTask.js', myParams);
 ```
-Last argument is just used when additionalParams.silent is set to false, and it's just used to write information about attempts (it's used in *launch* and *launchPuppetGoup* functions), so to be honest- it's unnecessary in this case.
+Remember that if you want gather performance information you must type *console.time* in your puppeteer scripts like this:
+```js
+console.time('puppetPerformance: yourLabel');
+// some code here
+console.timeEnd('puppetPerformance: yourLabel');
+```
 #### launchPuppetsGroup
-to be done
+This function launches single puppet in loop, so many times as you want- by default is 3 times (parameter name is *attempts*). As argument you must type just path to your puppet:
+```js
+launchPuppet('./tasks/puppeteerTask.js');
+```
+You can parameterize with object passed as second value.
+```js
+launchPuppet('./tasks/puppeteerTask.js', myParams);
+```
+If you params object contains additionalParams.checkPerformance set as true this function returns object with performance data.
+Remember that if you want gather performance information you must type *console.time* in your puppeteer scripts like this:
+```js
+console.time('puppetPerformance: yourLabel');
+// some code here
+console.timeEnd('puppetPerformance: yourLabel');
+```
+This function returns object with all performance data- name of task and duration of executing puppet script.
 ### Parameters
 ##### Defaults
 ```js
