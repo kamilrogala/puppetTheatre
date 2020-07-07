@@ -148,6 +148,7 @@ const assignResults = (testResult, resultsObj) => {
  * @param {string} puppetExec output of executed puppeteer file
  * @param {object} resultsObj  object to assign results
  * @param {number} index attempt number
+ * @param {string} puppetPath absolute path to puppet
  * @returns {object} returns modified object
  */
 const gatherPuppetResults = (puppetExec, resultsObj, index, puppetPath) => {
