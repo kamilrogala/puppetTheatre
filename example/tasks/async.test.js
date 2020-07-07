@@ -24,8 +24,8 @@ const test = async (url, index) => {
 
     await browser.close();
 
-    if (index + 1 === links.length) console.timeEnd('puppetPerformance');
+    if (index + 1 === links.length) console.timeEnd('puppetPerformance: test');
 };
 
-console.time('puppetPerformance');
+console.time('puppetPerformance: test');
 links.forEach(async (url, index) => await test(url, index));

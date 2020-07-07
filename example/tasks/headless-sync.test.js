@@ -12,7 +12,7 @@ const config = {
 const links = Array(3).fill('https://google.com');
 
 (async () => {
-    console.time('puppetPerformance');
+    console.time('puppetPerformance: test');
 
     const browser = await puppeteer.launch(config);
     const page = await browser.newPage();
@@ -32,6 +32,6 @@ const links = Array(3).fill('https://google.com');
     }
     await testFn(links, test);
     await browser.close();
-    console.timeEnd('puppetPerformance');
+    console.timeEnd('puppetPerformance: test');
 
 })();
