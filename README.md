@@ -26,9 +26,15 @@ letsReachForTheStars('./tasks/puppeteerTask.js');
 ### Public functions
 You have 3 public functions which you can use:
 
-- launch(params?: object) => void
-- launchPuppet(puppet: string, params?: object, testsResults?: object, index?: number) => void|object
-- launchPuppetsGroup: (puppet: string, params?: object, resultsObj?: object, performanceObj?: object) => object
+```js
+launch(params?: object) => void
+```
+```js
+launchPuppet(puppet: string, params?: object, testsResults?: object, index?: number) => void|object
+```
+```js
+launchPuppetsGroup(puppet: string, params?: object, resultsObj?: object, performanceObj?: object) => object
+```
 
 #### launch
 This function launches many groups of puppets.
