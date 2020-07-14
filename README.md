@@ -157,30 +157,38 @@ for more info check [fast-glob repository](https://github.com/mrmlnc/fast-glob#b
 Used in:
 - *launch*
 - *launchPuppetsGroup*
+
 **path.results**
 path to export result of the tasks.
 Used in:
 - *launch*
+
 **attempts**
 Each puppeteer script can be run multiple times in a loop. Use this parameter to run scripts as many times as you need!
 Used in:
 - *launch*
 - *launchPuppetsGroup*
+
 **additionalParams.checkPerformance**
 Switch to true to gather performance results of each attempt
 Used in:
 - *launch*
 - *launchPuppet*
 - *launchPuppetsGroup*
+
 **additionalParams.silent**
 Gives informations about current attempt number, and start/end of script
 Used in:
 - *launch*
 - *launchPuppet*
 - *launchPuppetsGroup*
+
 **additionalParams.fastGlobParams.extglob**
  Additional options for fast-glob npm package
  For more info check [fast-glob options](https://github.com/mrmlnc/fast-glob#options-3).
  Used in:
 - *launch*
 - *launchPuppetsGroup*
+
+## Contributing
+PR, criticism, comments and advice are welcome!
