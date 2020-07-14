@@ -16,7 +16,7 @@ require('colors');
  * @property {number} attempts number of attempts
  * @property {object} additionalParams additional params objects
  * @property {boolean} additionalParams.checkPerformance should the launcher perform tests?
- * @property {[]string} additionalParams.pattern pattern for
+ * @property {boolean} additionalParams.silent gives informations about current attempt number, and start/end of script
  * @property {object} additionalParams.fastGlobParams additional options for fast-glob npm package
  */
 const defaultParams = {
