@@ -1,4 +1,3 @@
-- make some documentation
 - launchPuppet maybe should be async (?)
 - launchPuppet should have optional callbacks (fail/success)
 - callback added to launch and launchPuppetsGroup (as param maybe?)
