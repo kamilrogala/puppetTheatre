@@ -130,4 +130,57 @@ output:
 */
 ```
 ##### Parameters usage in functions
-to be done
+**path.pattern**
+Array of string with path to your puppeteer scripts.
+You can use paths like:
+```js
+[
+  './tasks/task1.puppet.js',
+  './tasks/task2.puppet.js',
+  './tasks/task3.js',
+  './tasks/test/test2/task-test.js',
+  './tasks/test/test2/task-test-asd.js',
+  './other-tasks/task0.js'
+  './other-tasks/task1.js'
+]
+```
+but you can also use more dynamic paths like this:
+```js
+[
+  './tasks/*.puppet.js',
+  './tasks/task3.js',
+  './tasks/test/**/*.js',
+  './other-tasks/task[01].js'
+]
+```
+for more info check [fast-glob repository](https://github.com/mrmlnc/fast-glob#basic-syntax).
+Used in:
+- *launch*
+- *launchPuppetsGroup*
+**path.results**
+path to export result of the tasks.
+Used in:
+- *launch*
+**attempts**
+Each puppeteer script can be run multiple times in a loop. Use this parameter to run scripts as many times as you need!
+Used in:
+- *launch*
+- *launchPuppetsGroup*
+**additionalParams.checkPerformance**
+Switch to true to gather performance results of each attempt
+Used in:
+- *launch*
+- *launchPuppet*
+- *launchPuppetsGroup*
+**additionalParams.silent**
+Gives informations about current attempt number, and start/end of script
+Used in:
+- *launch*
+- *launchPuppet*
+- *launchPuppetsGroup*
+**additionalParams.fastGlobParams.extglob**
+ Additional options for fast-glob npm package
+ For more info check [fast-glob options](https://github.com/mrmlnc/fast-glob#options-3).
+ Used in:
+- *launch*
+- *launchPuppetsGroup*
