@@ -31,6 +31,7 @@ const defaultParams = {
         fastGlobParams: {
             extglob: true,
         },
+        callback: null,
     },
 };
 
@@ -203,6 +204,13 @@ const launchPuppet = (
         results = gatherPuppetResults(puppetExec.toString(), testsResults, index, puppet);
     }
 
+    if (
+        concatenatedParams.additionalParams.callback
+        && concatenatedParams.additionalParams.callback instanceof Function
+    ) {
+        concatenatedParams.additionalParams.callback();
+    }
+
     return results;
 };
 
@@ -238,6 +246,13 @@ const launchPuppetsGroup = (
     generalPerformanceResults[puppet] = performanceTime;
 
     if (!concatenatedParams.additionalParams.silent) console.info(`${puppet} ended\n======`);
+
+    if (
+        concatenatedParams.additionalParams.callback
+        && concatenatedParams.additionalParams.callback instanceof Function
+    ) {
+        concatenatedParams.additionalParams.callback();
+    }
 
     return assignResults(generalPerformanceResults, performanceObj);
 };

@@ -92,7 +92,8 @@ This function returns object with all performance data- name of task and duratio
     fastGlobParams: {
       extglob:  true
     }
-  }
+  },
+  callback: null
 }
 ```
 ##### Overriding defaults
@@ -125,7 +126,8 @@ output:
       extglob:  true,
       braceExpansion:  false
     }
-  }
+  },
+  callback: null
 }
 */
 ```
@@ -188,6 +190,13 @@ Used in:
  For more info check [fast-glob options](https://github.com/mrmlnc/fast-glob#options-3).
  Used in:
 - *launch*
+- *launchPuppetsGroup*
+
+**additionalParams.callback**
+You can pass here yor function- it will be run just before end of specified puppetTheatre task
+Used in:
+- *launch*
+- *launchPuppet*
 - *launchPuppetsGroup*
 
 ## Contributing

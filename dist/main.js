@@ -52,6 +52,13 @@ const launch = (params = defaultParams) => {
 
         writeResultsToFile(logObject.performanceResults, `${executeDirPath}/${concatenatedParams.path.results}`);
     }
+
+    if (
+        concatenatedParams.additionalParams.callback
+        && concatenatedParams.additionalParams.callback instanceof Function
+    ) {
+        concatenatedParams.additionalParams.callback();
+    }
 };
 
 /**
