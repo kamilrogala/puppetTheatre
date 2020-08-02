@@ -29,10 +29,11 @@ const defaultParams = {
     additionalParams: {
         checkPerformance: true,
         silent: false,
+        writeResultsToFile: true,
+        callback: null,
         fastGlobParams: {
             extglob: true,
         },
-        callback: null,
     },
 };
 

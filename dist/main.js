@@ -50,7 +50,9 @@ const launch = (params = defaultParams) => {
             performanceInformations(concatenatedParams, logObject);
         }
 
-        writeResultsToFile(logObject.performanceResults, `${executeDirPath}/${concatenatedParams.path.results}`);
+        if (concatenatedParams.additionalParams.writeResultsToFile) {
+            writeResultsToFile(logObject.performanceResults, `${executeDirPath}/${concatenatedParams.path.results}`);
+        }
     }
 
     if (
