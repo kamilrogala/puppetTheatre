@@ -70,6 +70,7 @@ You can parameterize with object passed as second value.
 launchPuppet('./tasks/puppeteerTask.js', myParams);
 ```
 If you params object contains additionalParams.checkPerformance set as true this function returns object with performance data.
+
 Remember that if you want gather performance information you must type *console.time* in your puppeteer scripts like this:
 ```js
 console.time('puppetPerformance: yourLabel');
@@ -135,8 +136,11 @@ output:
 ```
 ##### Parameters usage in functions
 **path.pattern**
+
 *type: Array\<string\>*
+
 Array of string with path to your puppeteer scripts.
+
 You can use paths like:
 ```js
 [
@@ -164,52 +168,74 @@ Used in:
 - *launchPuppetsGroup*
 
 **path.results**
+
 *type: String*
+
 path to export performance data of the tasks.
+
 Used in:
 - *launch*
 
 **attempts**
+
 *type: Number*
+
 Each puppeteer script can be run multiple times in a loop. Use this parameter to run scripts as many times as you need!
+
 Used in:
 - *launch*
 - *launchPuppetsGroup*
 
 **additionalParams.checkPerformance**
+
 *type: Boolean*
+
 Switch to true to gather performance results of each attempt
+
 Used in:
 - *launch*
 - *launchPuppet*
 - *launchPuppetsGroup*
 
 **additionalParams.silent**
+
 *type: Boolean*
+
 Gives informations about current attempt number, and start/end of script
+
 Used in:
 - *launch*
 - *launchPuppet*
 - *launchPuppetsGroup*
 
 **additionalParams.writeResultsToFile**
+
 *type: Boolean*
+
 Write tasks performance data into file
+
 Used in:
 - *launch*
 
 **additionalParams.callback**
+
 *type: Function*
+
 You can pass here yor function- it will be run just before end of specified puppetTheatre task
+
 Used in:
 - *launch*
 - *launchPuppet*
 - *launchPuppetsGroup*
 
 **additionalParams.fastGlobParams.extglob**
+
 *type: Object*
+
  Additional options for fast-glob npm package
+ 
  For more info check [fast-glob options](https://github.com/mrmlnc/fast-glob#options-3).
+ 
  Used in:
 - *launch*
 - *launchPuppetsGroup*
