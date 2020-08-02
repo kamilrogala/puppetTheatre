@@ -1,7 +1,4 @@
 - launchPuppet maybe should be async (?)
-- launchPuppet should have optional callbacks (fail/success)
-- callback added to launch and launchPuppetsGroup (as param maybe?)
-- write results to file should be optional (as param)
 - results should be... prettier
 - multiple internal performance tests
 - write some unit tests
