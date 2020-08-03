@@ -137,7 +137,7 @@ output:
 ##### Parameters usage in functions
 **path.pattern**
 
-*type: Array\<string\>*
+*type: String | Array\<string\>*
 
 Array of string with path to your puppeteer scripts.
 
