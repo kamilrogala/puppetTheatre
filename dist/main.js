@@ -8,6 +8,8 @@ const {
     mergeObjects,
     launchPuppetsGroup,
     launchPuppet,
+    validateParams,
+    validateFail,
 } = require('./helpers');
 
 /**
@@ -28,6 +30,9 @@ const logObject = {
  */
 const launch = (params = defaultParams) => {
     const concatenatedParams = mergeObjects(defaultParams, params);
+
+    if (validateParams(concatenatedParams, 'defaultParams')) validateFail();
+
     const executeDirPath = path.normalize(path.dirname(require.main.filename));
     const puppets = getPuppets(
         concatenatedParams.path.pattern,

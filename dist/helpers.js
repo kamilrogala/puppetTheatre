@@ -2,6 +2,7 @@ const {
     writeFileSync,
 } = require('fs');
 const path = require('path');
+const { exit } = require('process');
 const fg = require('fast-glob');
 const {
     execSync,
@@ -11,7 +12,7 @@ require('colors');
 /**
  * @namespace defaultParams
  * @property {object} path paths objects
- * @property {[]string} path.pattern pattern for puppet files location
+ * @property {string[]|string} path.pattern pattern for puppet files location
  * @property {string} path.results path to result file
  * @property {number} attempts number of attempts
  * @property {object} additionalParams additional params objects
@@ -38,10 +39,132 @@ const defaultParams = {
 };
 
 /**
+ * @name validateFail
+ * @description Function displays the errors and exits the process
+ */
+const validateFail = () => {
+    console.error('\nParams are invalid!'.red);
+    console.error('Process terminated.'.bgRed.white);
+    console.error('\n\n\n');
+    exit(1);
+};
+
+/**
+ * @name validateParams
+ * @description validate parameters for functions
+ * @param {[]} elementsToCheck array of objects to test
+ *      each object should have form like this:
+ * ```js
+ * {
+ *      toCheck: elementToCheck,
+ *      type: 'object',
+ * }
+ * ```
+ * @returns {boolean} returns true if something is wrong
+ */
+// eslint-disable-next-line arrow-body-style
+const validateSequence = (elementsToCheck) => {
+    // eslint-disable-next-line no-use-before-define
+    return elementsToCheck.some((element) => validateParams(
+        element.toCheck,
+        element.type,
+    ));
+};
+
+/**
+ * @name validateParams
+ * @description validate parameters for functions
+ * @param {*} elementToCheck variable, object, array or other type to check
+ * @param {string} requiredType what type of data should it be
+ * @returns {boolean} returns true if something is wrong
+ */
+const validateParams = (elementToCheck, requiredType) => {
+    let result = true;
+    let paramToValidate = elementToCheck;
+
+    switch (requiredType) {
+    case 'defaultParams':
+        paramToValidate = [
+            {
+                toCheck: elementToCheck.path,
+                type: 'object',
+            },
+            {
+                toCheck: elementToCheck.path.pattern,
+                type: 'string|StringArray',
+            },
+            {
+                toCheck: elementToCheck.path.results,
+                type: 'string',
+            },
+            {
+                toCheck: elementToCheck.attempts,
+                type: 'number',
+            },
+            {
+                toCheck: elementToCheck.additionalParams,
+                type: 'object',
+            },
+            {
+                toCheck: elementToCheck.additionalParams.checkPerformance,
+                type: 'boolean',
+            },
+            {
+                toCheck: elementToCheck.additionalParams.silent,
+                type: 'boolean',
+            },
+            {
+                toCheck: elementToCheck.additionalParams.writeResultsToFile,
+                type: 'boolean',
+            },
+            {
+                toCheck: elementToCheck.additionalParams.callback,
+                type: 'function',
+            },
+            {
+                toCheck: elementToCheck.additionalParams.fastGlobParams,
+                type: 'object',
+            },
+        ];
+
+        result = validateSequence(paramToValidate);
+
+        break;
+    case 'function':
+        if (paramToValidate === null) {
+            result = false;
+        } else {
+            result = !(paramToValidate instanceof Function);
+        }
+        break;
+    case 'string|StringArray':
+        result = (typeof paramToValidate).toLowerCase() !== requiredType.toLowerCase();
+        if (result) {
+            result = !(Array.isArray(paramToValidate));
+            if (!result) {
+                result = (typeof paramToValidate[0]).toLowerCase() !== 'string';
+            }
+        }
+        break;
+    default:
+        if (paramToValidate.toString().toLowerCase() === 'infinity') {
+            result = true;
+            break;
+        }
+
+        result = (typeof paramToValidate).toLowerCase() !== requiredType.toLowerCase();
+        break;
+    }
+
+    return result;
+};
+
+/**
  * @name getPuppets
  * @description gets puppeteer files (*.puppet.js) from specified path
- * @param {string} [path=*.puppet.js] Pattern for name of puppet files
+ * @param {string} [pattern=*.puppet.js] Pattern for name of puppet files
  * @param {string} params Params for fast-glob npm package
+ * @param {string} executeDir execute directory path
  * @returns {string[]} Array with names of puppet files
  */
 const getPuppets = (pattern = defaultParams.path.pattern, params, executeDir = null) => {
@@ -192,6 +315,28 @@ const launchPuppet = (
     index = 0,
 ) => {
     const concatenatedParams = mergeObjects(defaultParams, params);
+
+    const paramToValidate = [
+        {
+            toCheck: puppet,
+            type: 'string',
+        },
+        {
+            toCheck: concatenatedParams,
+            type: 'defaultParams',
+        },
+        {
+            toCheck: testsResults,
+            type: 'object',
+        },
+        {
+            toCheck: index,
+            type: 'number',
+        },
+    ];
+
+    if (validateSequence(paramToValidate)) validateFail();
+
     let results = {};
 
     if (!concatenatedParams.additionalParams.silent) console.info(`attempt #${index + 1}`);
@@ -233,6 +378,28 @@ const launchPuppetsGroup = (
     performanceObj = {},
 ) => {
     const concatenatedParams = mergeObjects(defaultParams, params);
+
+    const paramToValidate = [
+        {
+            toCheck: puppet,
+            type: 'string',
+        },
+        {
+            toCheck: concatenatedParams,
+            type: 'defaultParams',
+        },
+        {
+            toCheck: resultsObj,
+            type: 'object',
+        },
+        {
+            toCheck: performanceObj,
+            type: 'object',
+        },
+    ];
+
+    if (validateSequence(paramToValidate)) validateFail();
+
     const generalPerformanceResults = {};
 
     if (!concatenatedParams.additionalParams.silent) console.info(`\n======\n${puppet} started`);
@@ -265,6 +432,9 @@ const launchPuppetsGroup = (
  */
 module.exports = {
     defaultParams,
+    validateParams,
+    validateSequence,
+    validateFail,
     getPuppets,
     writeResultsToFile,
     performanceInformations,
