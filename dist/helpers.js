@@ -12,7 +12,7 @@ require('colors');
 /**
  * @namespace defaultParams
  * @property {object} path paths objects
- * @property {string[]|string} path.pattern pattern for puppet files location
+ * @property {(string[]|string)} path.pattern pattern for puppet files location
  * @property {string} path.results path to result file
  * @property {number} attempts number of attempts
  * @property {object} additionalParams additional params objects
