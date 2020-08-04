@@ -36,6 +36,8 @@ launchPuppet(puppet: string, params?: object, testsResults?: object, index?: num
 launchPuppetsGroup(puppet: string, params?: object, resultsObj?: object, performanceObj?: object) => object
 ```
 
+In brief: *launch* runs *launchPuppetsGroup* which use *launchPuppet* in loop.
+
 #### launch
 This function launches many groups of puppets.
 ```js
@@ -91,7 +93,7 @@ This function returns object with all performance data- name of task and duratio
     checkPerformance:  true,
     silent:  false,
     writeResultsToFile: true,
-    callback: null
+    callback: null,
     fastGlobParams: {
       extglob:  true
     }
@@ -125,7 +127,7 @@ output:
     checkPerformance:  false,
     silent:  false,
     writeResultsToFile: true,
-    callback: null
+    callback: null,
     fastGlobParams: {
       extglob:  true,
       braceExpansion:  false

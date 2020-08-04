@@ -1,4 +1,3 @@
-- launchPuppet maybe should be async (?)
 - results should be... prettier
 - multiple internal performance tests
 - write some unit tests
